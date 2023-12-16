@@ -13,7 +13,7 @@ function RoomFilter({ data, setFilteredData }) {
     setFilteredData(filterdRooms);
   };
 
-  const clearFilter = () => {
+  const handleClearFilter = () => {
     setFilter("");
     setFilteredData(data);
   };
@@ -32,7 +32,19 @@ function RoomFilter({ data, setFilteredData }) {
         onChange={handleSelectChange}
       >
         <option value={""}>Select a room to filter...</option>
+        {roomTypes.map((roomType, index) => (
+          <option key={index} value={roomType}>
+            {roomType}
+          </option>
+        ))}
       </select>
+      <button
+        className="btn btn-hotel"
+        type="button"
+        onClick={handleClearFilter}
+      >
+        Clear Filter
+      </button>
     </div>
   );
 }

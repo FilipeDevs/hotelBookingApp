@@ -31,7 +31,9 @@ function RoomFilter({ data, setFilteredData }) {
         value={filter}
         onChange={handleSelectChange}
       >
-        <option value={""}>Select a room to filter...</option>
+        <option value={""} disabled>
+          Select a room to filter...
+        </option>
         {roomTypes.map((roomType, index) => (
           <option key={index} value={roomType}>
             {roomType}

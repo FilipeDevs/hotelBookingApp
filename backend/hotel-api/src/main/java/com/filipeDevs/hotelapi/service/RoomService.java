@@ -5,6 +5,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.List;
+
 import javax.sql.rowset.serial.SerialBlob;
 import com.filipeDevs.hotelapi.model.Room;
 import com.filipeDevs.hotelapi.repository.RoomRepository;
@@ -30,6 +32,11 @@ public class RoomService implements RoomServiceInterface {
         }
 
         return roomRepository.save(room);
+    }
+
+    @Override
+    public List<String> getAllRoomTypes() {
+        return roomRepository.findDistinctRoomTypes();
     }
 
 }

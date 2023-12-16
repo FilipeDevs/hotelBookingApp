@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { addRoom } from "../utils/API";
+import RoomTypeSelector from "../common/RoomTypeSelector";
 
 function AddRoom() {
   const [newRoom, setNewRoom] = useState({
@@ -13,13 +14,6 @@ function AddRoom() {
 
   const handleRoomInputChange = (e) => {
     let { name, value } = e.target;
-    if (name === "roomPrice") {
-      if (!isNaN(value)) {
-        value.parseInt(value);
-      } else {
-        value = "";
-      }
-    }
     setNewRoom({ ...newRoom, [name]: value });
   };
 
@@ -66,7 +60,12 @@ function AddRoom() {
                 <label className="form-label" htmlFor="roomType">
                   Room Type
                 </label>
-                <div></div>
+                <div>
+                  <RoomTypeSelector
+                    handleRoomInputChange={handleRoomInputChange}
+                    newRoom={newRoom}
+                  />
+                </div>
               </div>
               <div className="mb-3">
                 <label className="form-label" htmlFor="roomPrice">

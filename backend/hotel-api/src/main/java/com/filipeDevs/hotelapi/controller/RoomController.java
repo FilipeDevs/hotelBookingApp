@@ -3,7 +3,11 @@ package com.filipeDevs.hotelapi.controller;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rooms")
+@CrossOrigin(origins = "*")
 public class RoomController {
 
     private final RoomServiceInterface roomService;
@@ -31,5 +36,10 @@ public class RoomController {
 
         return ResponseEntity.ok(roomResponse);
 
+    }
+
+    @GetMapping("/room/types")
+    public List<String> getRoomTypes() {
+        return roomService.getAllRoomTypes();
     }
 }

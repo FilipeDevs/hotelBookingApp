@@ -13,8 +13,6 @@ import javax.sql.rowset.serial.SerialBlob;
 import com.filipeDevs.hotelapi.exception.ResourceNotFoundException;
 import com.filipeDevs.hotelapi.model.Room;
 import com.filipeDevs.hotelapi.repository.RoomRepository;
-
-import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import java.io.IOException;
 

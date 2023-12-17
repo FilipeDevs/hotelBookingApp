@@ -56,24 +56,26 @@ function Room() {
   );
 
   return (
-    <Container>
-      <Row>
-        <Col md={6} className="mb-3 mb-md-0">
-          <RoomFilter data={data} setFilteredData={setFilteredData} />
-        </Col>
-        <Col md={6} className="d-flex align-items-center justify-content-end">
-          {renderPaginator()}
-        </Col>
-      </Row>
+    <section className="bg-light p-2 mb-5 mt-5 shadow">
+      <Container>
+        <Row>
+          <Col md={6} className="mb-3 mb-md-0">
+            <RoomFilter data={data} setFilteredData={setFilteredData} />
+          </Col>
+          <Col md={6} className="d-flex align-items-center justify-content-end">
+            {renderPaginator()}
+          </Col>
+        </Row>
 
-      <Row>{renderRooms(filteredData, currentPage)}</Row>
+        <Row>{renderRooms(filteredData, currentPage)}</Row>
 
-      <Row>
-        <Col md={6} className="d-flex align-items-center justify-content-end">
-          {renderPaginator()}
-        </Col>
-      </Row>
-    </Container>
+        <Row>
+          <Col md={6} className="d-flex align-items-center justify-content-end">
+            {renderPaginator()}
+          </Col>
+        </Row>
+      </Container>
+    </section>
   );
 }
 

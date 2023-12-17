@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 function Navbar() {
   const [showAccount, setShowAccount] = useState(false);
@@ -30,7 +29,11 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarScroll">
           <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
             <li className="nav-item">
-              <NavLink className="nav-link" aria-current="page">
+              <NavLink
+                to={"/browse-all-rooms"}
+                className="nav-link"
+                aria-current="page"
+              >
                 Browse all rooms
               </NavLink>
             </li>

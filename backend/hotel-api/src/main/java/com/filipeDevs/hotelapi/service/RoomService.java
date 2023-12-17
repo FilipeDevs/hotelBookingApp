@@ -23,10 +23,12 @@ public class RoomService implements RoomServiceInterface {
     private final RoomRepository roomRepository;
 
     @Override
-    public Room addNewRoom(MultipartFile file, String roomType, BigDecimal roomPrice) throws SQLException, IOException {
+    public Room addNewRoom(MultipartFile file, String roomType, BigDecimal roomPrice, String description)
+            throws SQLException, IOException {
         Room room = new Room();
         room.setRoomType(roomType);
         room.setRoomPrice(roomPrice);
+        room.setDescription(description);
         if (!file.isEmpty()) {
             byte[] photoBytes = file.getBytes();
             Blob photoBlob = new SerialBlob(photoBytes);
@@ -71,12 +73,14 @@ public class RoomService implements RoomServiceInterface {
     }
 
     @Override
-    public Room updateRoom(Long roomId, String roomType, BigDecimal roomPrice, byte[] photoBytes) {
+    public Room updateRoom(Long roomId, String roomType, BigDecimal roomPrice, String description, byte[] photoBytes) {
         Room room = roomRepository.findById(roomId).get();
         if (roomType != null)
             room.setRoomType(roomType);
         if (roomPrice != null)
             room.setRoomPrice(roomPrice);
+        if (description != null)
+            room.setDescription(description);
         if (photoBytes != null && photoBytes.length > 0) {
             try {
                 room.setPhoto(new SerialBlob(photoBytes));

@@ -4,11 +4,12 @@ export const api = axios.create({
   baseURL: "http://localhost:9192",
 });
 
-export async function addRoom(photo, roomType, roomPrice) {
+export async function addRoom(photo, roomType, roomPrice, roomDescription) {
   const formData = new FormData();
   formData.append("photo", photo);
   formData.append("roomType", roomType);
   formData.append("roomPrice", roomPrice);
+  formData.append("description", roomDescription);
 
   const response = await api.post("/rooms/add/new-room", formData);
 
@@ -50,6 +51,7 @@ export async function updateRoom(roomId, roomData) {
   const formData = new FormData();
   formData.append("roomType", roomData.roomType);
   formData.append("roomPrice", roomData.roomPrice);
+  formData.append("description", roomData.description);
 
   // Check if 'photo' is a File instance before appending
   // When no photo is selected dont append anything

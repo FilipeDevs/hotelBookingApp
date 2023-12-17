@@ -22,7 +22,9 @@ function RoomCard({ room }) {
               {room.roomPrice} / night
             </Card.Title>
             <Card.Text>
-              Some room information goes here for the guest to read through
+              {room.description.length > 100
+                ? room.description.substring(0, 100) + "..."
+                : room.description}
             </Card.Text>
           </div>
           <div className="flex-shrink-0 mt-3">

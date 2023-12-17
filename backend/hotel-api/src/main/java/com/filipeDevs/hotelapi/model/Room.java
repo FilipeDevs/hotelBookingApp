@@ -35,6 +35,8 @@ public class Room {
 
     private boolean isBooked = false;
 
+    private String description;
+
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BookedRoom> bookings;
 

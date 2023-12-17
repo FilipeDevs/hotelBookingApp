@@ -8,6 +8,7 @@ function EditRoom() {
     photo: null,
     roomType: "",
     roomPrice: "",
+    description: "",
   });
 
   const [imagePreview, setImagePreview] = useState("");
@@ -105,7 +106,19 @@ function EditRoom() {
                 onChange={handleRoomInputChange}
               />
             </div>
-
+            <div className="mb-3">
+              <label className="form-label hotel-color" htmlFor="description">
+                Room Description
+              </label>
+              <textarea
+                className="form-control"
+                required
+                id="description"
+                name="description"
+                value={room.description}
+                onChange={handleRoomInputChange}
+              />
+            </div>
             <div className="mb-3">
               <label htmlFor="photo" className="form-label hotel-color">
                 Photo

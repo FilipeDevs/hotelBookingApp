@@ -42,10 +42,11 @@ public class RoomController {
     @PostMapping("/add/new-room")
     public ResponseEntity<RoomResponse> addNewRoom(
             @RequestParam("photo") MultipartFile photo, @RequestParam("roomType") String roomType,
-            @RequestParam("roomPrice") BigDecimal roomPrice) throws SQLException, IOException {
-        Room savedRoom = roomService.addNewRoom(photo, roomType, roomPrice);
+            @RequestParam("roomPrice") BigDecimal roomPrice, @RequestParam("description") String description)
+            throws SQLException, IOException {
+        Room savedRoom = roomService.addNewRoom(photo, roomType, roomPrice, description);
         RoomResponse roomResponse = new RoomResponse(savedRoom.getId(), savedRoom.getRoomType(),
-                savedRoom.getRoomPrice());
+                savedRoom.getRoomPrice(), savedRoom.getDescription());
 
         return ResponseEntity.ok(roomResponse);
 
@@ -80,12 +81,12 @@ public class RoomController {
     public ResponseEntity<RoomResponse> updateRoom(@PathVariable Long roomId,
             @RequestParam(required = false) String roomType,
             @RequestParam(required = false) BigDecimal roomPrice,
-            @RequestParam(required = false) MultipartFile photo) throws SQLException, IOException {
-
+            @RequestParam(required = false) MultipartFile photo,
+            @RequestParam(required = false) String description) throws SQLException, IOException {
         // Get photo bytes from request if it is not null
         byte[] photoBytes = photo != null && !photo.isEmpty() ? photo.getBytes()
                 : roomService.getRoomPhotoByRoomId(roomId);
-        Room room = roomService.updateRoom(roomId, roomType, roomPrice, photoBytes);
+        Room room = roomService.updateRoom(roomId, roomType, roomPrice, description, photoBytes);
         RoomResponse roomResponse = getRoomResponse(room);
         return ResponseEntity.ok(roomResponse);
     }
@@ -122,7 +123,9 @@ public class RoomController {
         }
 
         // Note : RoomResponse constructor will convert photo bytes to Base64 String
-        return new RoomResponse(room.getId(), room.getRoomType(), room.getRoomPrice(), room.isBooked(), photoBytes,
+        return new RoomResponse(room.getId(), room.getRoomType(), room.getRoomPrice(), room.getDescription(),
+                room.isBooked(),
+                photoBytes,
                 bookingsInfo);
     }
 

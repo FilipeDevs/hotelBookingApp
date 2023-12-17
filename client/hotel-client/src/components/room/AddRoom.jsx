@@ -8,6 +8,7 @@ function AddRoom() {
     photo: null,
     roomType: "",
     roomPrice: "",
+    description: "",
   });
   const [imagePreview, setImagePreview] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -30,7 +31,8 @@ function AddRoom() {
       const success = await addRoom(
         newRoom.photo,
         newRoom.roomType,
-        newRoom.roomPrice
+        newRoom.roomPrice,
+        newRoom.description
       );
       if (success !== undefined) {
         setSuccessMessage("Room added successfully");
@@ -39,6 +41,7 @@ function AddRoom() {
           photo: null,
           roomType: "",
           roomPrice: "",
+          description: "",
         });
         setImagePreview("");
         setErrorMessage("");
@@ -98,6 +101,19 @@ function AddRoom() {
                 />
               </div>
               <div className="mb-3">
+                <label className="form-label" htmlFor="description">
+                  Room Description
+                </label>
+                <textarea
+                  className="form-control"
+                  required
+                  id="description"
+                  name="description"
+                  value={newRoom.description}
+                  onChange={handleRoomInputChange}
+                />
+              </div>
+              <div className="mb-3">
                 <label className="form-label" htmlFor="photo">
                   Room Photo
                 </label>
@@ -122,7 +138,7 @@ function AddRoom() {
                 <Link to={"/existing-rooms"} className="btn btn-outline-info">
                   Back
                 </Link>
-                <button className="btn btn-outline-primary ml-5">
+                <button type="submit" className="btn btn-outline-primary ml-5">
                   Save Room
                 </button>
               </div>

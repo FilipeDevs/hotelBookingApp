@@ -41,7 +41,7 @@ function RoomFilter({ data, setFilteredData }) {
         ))}
       </select>
       <button
-        className="btn btn-hotel"
+        className="btn btn-info"
         type="button"
         onClick={handleClearFilter}
       >

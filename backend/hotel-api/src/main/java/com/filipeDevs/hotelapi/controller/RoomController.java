@@ -6,9 +6,13 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,6 +66,12 @@ public class RoomController {
         }
 
         return ResponseEntity.ok(roomResponses);
+    }
+
+    @DeleteMapping("/delete/{roomId}")
+    public ResponseEntity<Void> deleteRoom(@PathVariable Long roomId) throws SQLException {
+        roomService.deleteRoom(roomId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     // Helper method to get room response with bookings info of a room

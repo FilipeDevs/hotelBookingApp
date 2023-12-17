@@ -61,4 +61,13 @@ public class RoomService implements RoomServiceInterface {
         return null;
     }
 
+    @Override
+    public void deleteRoom(Long roomId) throws SQLException {
+        Optional<Room> room = roomRepository.findById(roomId);
+        if (room.isEmpty()) {
+            throw new ResourceNotFoundException("Room not found");
+        }
+        roomRepository.delete(room.get());
+    }
+
 }

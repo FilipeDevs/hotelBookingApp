@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { getAllRooms } from "../utils/API";
+import { deleteRoom, getAllRooms } from "../utils/API";
 import { Col, Row } from "react-bootstrap";
 import RoomFilter from "../common/RoomFilter";
 import RoomPaginator from "../common/RoomPaginator";
+import { FaEye, FaTrashAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 function ExistingRooms() {
   const [rooms, setRooms] = useState([]);
@@ -49,10 +51,28 @@ function ExistingRooms() {
   const calculateTotalPages = (filteredRooms, roomsPerPage, rooms) => {
     // If there are filtered rooms, return the number of pages based on the filtered rooms
     // else return the number of pages based on all rooms
-    console.log(rooms.length);
     const totalRooms =
       filteredRooms.length > 0 ? filteredRooms.length : rooms.length;
     return Math.ceil(totalRooms / roomsPerPage);
+  };
+
+  const handleDelete = async (roomId) => {
+    try {
+      const response = await deleteRoom(roomId);
+      if (response === "") {
+        setSuccessMessage(`Room No ${roomId} deleted successfully`);
+        fetchRooms();
+      } else {
+        console.error(`Error deleting room no ${roomId} : ${response.message}`);
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+    // Clear success and error messages after 5 seconds
+    setTimeout(() => {
+      setSuccessMessage("");
+      setErrorMessage("");
+    }, 5000);
   };
 
   // Calculate index of last and first room on the current page
@@ -94,8 +114,18 @@ function ExistingRooms() {
                     <td>{room.roomType}</td>
                     <td>{room.roomPrice}</td>
                     <td className="gap-2">
-                      <button>View / Edit</button>
-                      <button>Delete</button>
+                      <Link to={`/edit-room/${room.id}`}>
+                        <span className="btn btn-info btn-sm">
+                          <FaEye />
+                        </span>
+                      </Link>
+
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => handleDelete(room.id)}
+                      >
+                        <FaTrashAlt />
+                      </button>
                     </td>
                   </tr>
                 ))}

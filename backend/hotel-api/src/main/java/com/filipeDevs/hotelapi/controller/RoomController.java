@@ -6,6 +6,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.filipeDevs.hotelapi.exception.PhotoRetrievalException;
+import com.filipeDevs.hotelapi.exception.ResourceNotFoundException;
 import com.filipeDevs.hotelapi.model.BookedRoom;
 import com.filipeDevs.hotelapi.model.Room;
 import com.filipeDevs.hotelapi.response.BookingResponse;
@@ -74,7 +76,7 @@ public class RoomController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("rooms/update/{roomId}")
+    @PutMapping("/update/{roomId}")
     public ResponseEntity<RoomResponse> updateRoom(@PathVariable Long roomId,
             @RequestParam(required = false) String roomType,
             @RequestParam(required = false) BigDecimal roomPrice,
@@ -86,6 +88,17 @@ public class RoomController {
         Room room = roomService.updateRoom(roomId, roomType, roomPrice, photoBytes);
         RoomResponse roomResponse = getRoomResponse(room);
         return ResponseEntity.ok(roomResponse);
+    }
+
+    @GetMapping("/{roomId}")
+    public ResponseEntity<RoomResponse> getRoomById(@PathVariable Long roomId) {
+        Optional<Room> room = roomService.getRoomById(roomId);
+        if (room.isPresent()) {
+            RoomResponse roomResponse = getRoomResponse(room.get());
+            return ResponseEntity.ok(roomResponse);
+        } else {
+            throw new ResourceNotFoundException("Room not found");
+        }
     }
 
     // Helper method to get room response with bookings info of a room

@@ -30,7 +30,9 @@ function EditRoom() {
       try {
         const roomData = await getRoomById(roomId);
         setRoom(roomData);
-        setImagePreview(roomData.photo);
+        // The image preview is a base64 encoded string on response from the server
+        // so we need to prepend the correct header to render it
+        setImagePreview(`data:image/jpeg;base64,${roomData.photo}`);
       } catch (error) {
         console.error(error);
       }
@@ -48,7 +50,9 @@ function EditRoom() {
         setSuccessMessage("Room updated successfully!");
         const updatedRoomData = await getRoomById(roomId);
         setRoom(updatedRoomData);
-        setImagePreview(updatedRoomData.photo);
+        // The image preview is a base64 encoded string on response from the server
+        // so we need to prepend the correct header to render it
+        setImagePreview(`data:image/jpeg;base64,${updatedRoomData.photo}`);
         setErrorMessage("");
       } else {
         setErrorMessage("Error updating room");
@@ -107,7 +111,6 @@ function EditRoom() {
                 Photo
               </label>
               <input
-                required
                 type="file"
                 className="form-control"
                 id="photo"
@@ -116,7 +119,7 @@ function EditRoom() {
               />
               {imagePreview && (
                 <img
-                  src={`data:image/jpeg;base64,${imagePreview}`}
+                  src={imagePreview}
                   alt="Room preview"
                   style={{ maxWidth: "400px", maxHeight: "400" }}
                   className="mt-3"

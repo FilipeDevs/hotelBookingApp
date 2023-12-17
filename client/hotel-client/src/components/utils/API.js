@@ -50,9 +50,15 @@ export async function updateRoom(roomId, roomData) {
   const formData = new FormData();
   formData.append("roomType", roomData.roomType);
   formData.append("roomPrice", roomData.roomPrice);
-  formData.append("photo", roomData.photo);
+
+  // Check if 'photo' is a File instance before appending
+  // When no photo is selected dont append anything
+  if (roomData.photo instanceof File) {
+    formData.append("photo", roomData.photo);
+  }
 
   const response = await api.put(`/rooms/update/${roomId}`, formData);
+  return response;
 }
 
 export async function getRoomById(roomId) {

@@ -70,4 +70,21 @@ public class RoomService implements RoomServiceInterface {
         roomRepository.delete(room.get());
     }
 
+    @Override
+    public Room updateRoom(Long roomId, String roomType, BigDecimal roomPrice, byte[] photoBytes) {
+        Room room = roomRepository.findById(roomId).get();
+        if (roomType != null)
+            room.setRoomType(roomType);
+        if (roomPrice != null)
+            room.setRoomPrice(roomPrice);
+        if (photoBytes != null && photoBytes.length > 0) {
+            try {
+                room.setPhoto(new SerialBlob(photoBytes));
+            } catch (SQLException e) {
+                throw new RuntimeException("Fail updating room");
+            }
+        }
+        return roomRepository.save(room);
+    }
+
 }

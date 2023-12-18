@@ -32,8 +32,8 @@ function RoomCarousel() {
 
   return (
     <section className="bg-light mb-5 mt-5 shadow">
-      <Link to={"/browse-all-rooms"} className="hote-color text-center">
-        Browse all rooms
+      <Link to={"/browse-all-rooms"} className="hotel-color text-center mb-1">
+        Browse all rooms...
       </Link>
 
       <Container>
@@ -50,7 +50,7 @@ function RoomCarousel() {
                           src={`data:image/png;base64, ${room.photo}`}
                           alt="Room Photo"
                           className="w-100"
-                          style={{ height: "200px" }}
+                          style={{ height: "250px" }}
                         />
                       </Link>
                       <Card.Body>

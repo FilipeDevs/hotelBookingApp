@@ -44,7 +44,7 @@ public class BookingController {
         return ResponseEntity.ok(bookingResponses);
     }
 
-    @PostMapping("/room/{roomId}/savebooking")
+    @PostMapping("/book/{roomId}")
     public ResponseEntity<?> saveBooking(@PathVariable Long roomId,
             @RequestBody BookedRoom bookingRequest) {
         try {
@@ -68,7 +68,7 @@ public class BookingController {
         }
     }
 
-    @DeleteMapping("/delete/{bookingId}")
+    @DeleteMapping("/cancel/{bookingId}")
     public void cancelBooking(@PathVariable Long bookingId) {
         bookingService.cancelBooking(bookingId);
     }

@@ -12,7 +12,7 @@ function Navbar() {
     <nav className="navbar navbar-expand-lg bg-body-tertiary px-5 shadow sticky-top">
       <div className="container-fluid">
         <Link to={"/"} className="navbar-brand">
-          <span className="hotel-color">Felix Hotel</span>
+          <span className="hotel-color">Felix Oasis Hotel</span>
         </Link>
 
         <button
@@ -38,14 +38,14 @@ function Navbar() {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" aria-current="page">
+              <NavLink to={"/admin"} className="nav-link" aria-current="page">
                 Admin
               </NavLink>
             </li>
           </ul>
           <ul className="d-flex navbar-nav">
             <li className="nav-item">
-              <NavLink className="nav-link">Find my booking</NavLink>
+              <NavLink className="nav-link">My bookings</NavLink>
             </li>
             <li className="nav-item dropdown">
               <a

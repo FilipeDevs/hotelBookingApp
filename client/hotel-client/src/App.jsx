@@ -8,6 +8,7 @@ import Footer from "./components/layout/Footer";
 import Home from "./components/home/Home";
 import EditRoom from "./components/room/EditRoom";
 import Room from "./components/room/Room";
+import Admin from "./components/admin/Admin";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/existing-rooms" element={<ExistingRooms />} />
           <Route path="/add-room" element={<AddRoom />} />
           <Route path="/browse-all-rooms" element={<Room />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </Router>
       <Footer />

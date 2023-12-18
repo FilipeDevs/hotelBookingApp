@@ -36,6 +36,11 @@ public class BookingService implements BookingServiceInterface {
     }
 
     @Override
+    public void cancelBooking(Long bookingId) {
+        bookingRepository.deleteById(bookingId);
+    }
+
+    @Override
     public String saveBooking(Long roomId, BookedRoom bookingRequest) {
         if (bookingRequest.getCheckOutDate().isBefore(bookingRequest.getCheckInDate())) {
             throw new IllegalArgumentException("Check-in date must come before check-out date");

@@ -13,4 +13,6 @@ public interface BookingServiceInterface {
 
     String saveBooking(Long roomId, BookedRoom bookingRequest);
 
+    public void cancelBooking(Long bookingId);
+
 }

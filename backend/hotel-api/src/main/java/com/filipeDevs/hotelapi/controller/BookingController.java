@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +33,7 @@ public class BookingController {
     private final BookingServiceInterface bookingService;
     private final RoomServiceInterface roomService;
 
+    @GetMapping("/all")
     public ResponseEntity<List<BookingResponse>> getAllBookings() {
         List<BookedRoom> bookings = bookingService.getAllBookings();
         List<BookingResponse> bookingResponses = new ArrayList<>();
@@ -41,6 +44,7 @@ public class BookingController {
         return ResponseEntity.ok(bookingResponses);
     }
 
+    @PostMapping("/room/{roomId}/savebooking")
     public ResponseEntity<?> saveBooking(@PathVariable Long roomId,
             @RequestBody BookedRoom bookingRequest) {
         try {
@@ -64,6 +68,13 @@ public class BookingController {
         }
     }
 
+    @DeleteMapping("/delete/{bookingId}")
+    public void cancelBooking(@PathVariable Long bookingId) {
+        bookingService.cancelBooking(bookingId);
+    }
+
+    // Helper method to construct the BookingResponse (with a RoomResponse) from the
+    // BookedRoom
     private BookingResponse getBookingResponse(BookedRoom booking) {
         Room room = roomService.getRoomById(booking.getRoom().getId()).get();
         RoomResponse roomResponse = new RoomResponse(

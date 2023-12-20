@@ -6,7 +6,7 @@ function BookingSuccess() {
   const message = location.state?.message;
   const error = location.state?.error;
   return (
-    <div className="container">
+    <div className="container mt-5">
       <Header title="Booking Success" />
       <div className="mt-5">
         {message ? (

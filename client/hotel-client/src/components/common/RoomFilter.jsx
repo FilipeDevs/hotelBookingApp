@@ -19,7 +19,7 @@ function RoomFilter({ data, setFilteredData }) {
   };
 
   // Extract all unique room types from the data
-  const roomTypes = ["", ...new Set(data.map((room) => room.roomType))];
+  const roomTypes = [...new Set(data.map((room) => room.roomType))];
 
   return (
     <div className="input-group mb-3">
@@ -41,7 +41,7 @@ function RoomFilter({ data, setFilteredData }) {
         ))}
       </select>
       <button
-        className="btn btn-info"
+        className="btn btn-primary"
         type="button"
         onClick={handleClearFilter}
       >

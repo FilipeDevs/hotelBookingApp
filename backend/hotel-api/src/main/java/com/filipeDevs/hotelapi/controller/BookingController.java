@@ -24,8 +24,8 @@ import com.filipeDevs.hotelapi.service.RoomServiceInterface;
 
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/bookings")
 @CrossOrigin(origins = "*")
 public class BookingController {
@@ -49,8 +49,7 @@ public class BookingController {
             @RequestBody BookedRoom bookingRequest) {
         try {
             String confirmationCode = bookingService.saveBooking(roomId, bookingRequest);
-            return ResponseEntity.ok(
-                    "Room booked successfully, Your booking confirmation code is :" + confirmationCode);
+            return ResponseEntity.ok(confirmationCode);
 
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

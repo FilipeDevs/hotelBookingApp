@@ -1,21 +1,24 @@
-import React, { Component, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Button, Form, FormControl } from "react-bootstrap";
 import { bookRoom, getRoomById } from "../utils/API";
 import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
+import BookingInfo from "./BookingInfo";
 
 function BookingForm() {
   const [validated, setValidated] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [roomPrice, setRoomPrice] = useState(0);
+  const [showModal, setShowModal] = useState(false);
 
   const [booking, setBooking] = useState({
     guestFullName: "",
     guestEmail: "",
     checkInDate: "",
     checkOutDate: "",
-    numOfAdults: "",
-    numOfChildren: "",
+    numOfAdults: 1,
+    numOfChildren: 0,
   });
 
   const [roomInfo, setRoomInfo] = useState({
@@ -31,6 +34,11 @@ function BookingForm() {
     try {
       const response = await getRoomById(roomId);
       setRoomPrice(response.roomPrice);
+      setRoomInfo({
+        photo: response.photo,
+        roomType: response.roomType,
+        roomPrice: response.roomPrice,
+      });
     } catch (error) {
       throw new Error(error);
     }
@@ -84,7 +92,7 @@ function BookingForm() {
     ) {
       e.stopPropagation();
     } else {
-      setIsSubmitted(true);
+      setShowModal(true);
     }
     setValidated(true);
   };
@@ -101,7 +109,158 @@ function BookingForm() {
     }
   };
 
-  return <div>BookingForm</div>;
+  return (
+    <>
+      <div className="container mb-5">
+        <div className="row">
+          <div className="col-md-6">
+            <div className="card card-body mt-5">
+              <h4 className="card-title">Book Room</h4>
+
+              <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                {/* Guest Info */}
+                <Form.Group>
+                  <Form.Label htmlFor="guestFullName">Full Name</Form.Label>
+                  <FormControl
+                    required
+                    type="text"
+                    id="guestFullName"
+                    name="guestFullName"
+                    value={booking.guestFullName}
+                    placeholder="Enter your fullname"
+                    onChange={handleInputChange}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please enter your full name.
+                  </Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label htmlFor="guestEmail">Email</Form.Label>
+                  <FormControl
+                    required
+                    type="email"
+                    id="guestEmail"
+                    name="guestEmail"
+                    value={booking.guestEmail}
+                    placeholder="Enter your email"
+                    onChange={handleInputChange}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please enter a valid email address.
+                  </Form.Control.Feedback>
+                </Form.Group>
+
+                {/* Lodging Period */}
+                <Form.Group>
+                  <Form.Label htmlFor="checkInDate">Check-in date</Form.Label>
+                  <FormControl
+                    required
+                    type="date"
+                    id="checkInDate"
+                    name="checkInDate"
+                    value={booking.checkInDate}
+                    placeholder="check-in-date"
+                    min={moment().format("MMM Do, YYYY")}
+                    onChange={handleInputChange}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please select a check in date.
+                  </Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label htmlFor="checkOutDate">Check-out date</Form.Label>
+                  <FormControl
+                    required
+                    type="date"
+                    id="checkOutDate"
+                    name="checkOutDate"
+                    value={booking.checkOutDate}
+                    placeholder="check-out-date"
+                    min={moment().format("MMM Do, YYYY")}
+                    onChange={handleInputChange}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please select a check out date.
+                  </Form.Control.Feedback>
+                  {errorMessage && (
+                    <p className="error-message text-danger">{errorMessage}</p>
+                  )}
+                </Form.Group>
+
+                {/* Number of Guests */}
+                <Form.Group>
+                  <Form.Label htmlFor="numOfAdults">Adults</Form.Label>
+                  <FormControl
+                    required
+                    type="number"
+                    id="numOfAdults"
+                    name="numOfAdults"
+                    value={booking.numOfAdults}
+                    min={1}
+                    placeholder="0"
+                    onChange={handleInputChange}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please select at least 1 adult.
+                  </Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label htmlFor="numOfChildren">Children</Form.Label>
+                  <FormControl
+                    required
+                    type="number"
+                    id="numOfChildren"
+                    name="numOfChildren"
+                    value={booking.numOfChildren}
+                    placeholder="0"
+                    min={0}
+                    onChange={handleInputChange}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Select 0 if no children
+                  </Form.Control.Feedback>
+                </Form.Group>
+
+                <div className="form-group mt-2 mb-2">
+                  <Button type="submit" className="btn btn-hotel">
+                    Continue
+                  </Button>
+                </div>
+              </Form>
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="card card-body mt-5">
+              <h4 className="card-title">Room Information</h4>
+              <strong>Photo</strong>
+              <img
+                src={`data:image/png;base64, ${roomInfo.photo}`}
+                alt="Room"
+                className="img-fluid"
+              />
+              <p>
+                <strong>Room Type:</strong> {roomInfo.roomType}
+              </p>
+              <p>
+                <strong>Room Price (per night):</strong> ${roomInfo.roomPrice}
+              </p>
+            </div>
+          </div>
+          <BookingInfo
+            booking={booking}
+            payment={calculateTotalPrice()}
+            onConfirm={handleFormSubmit}
+            isFormValid={validated}
+            showModal={showModal}
+            toggleModal={() => setShowModal(!showModal)}
+          />
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default BookingForm;

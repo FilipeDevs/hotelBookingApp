@@ -32,11 +32,10 @@ function RoomCarousel() {
 
   return (
     <section className="bg-light mb-5 mt-5 shadow">
-      <Link to={"/browse-all-rooms"} className="hotel-color text-center mb-1">
-        Browse all rooms...
-      </Link>
-
       <Container>
+        <Link to={"/browse-all-rooms"} className="hotel-color text-center mb-1">
+          Browse all rooms...
+        </Link>
         <Carousel indicators={true}>
           {[...Array(Math.ceil(rooms.length / 3))].map((_, index) => (
             <Carousel.Item key={index}>
@@ -44,24 +43,22 @@ function RoomCarousel() {
                 {rooms.slice(index * 3, index * 3 + 3).map((room) => (
                   <Col key={room.id} className="mb-4" xs={12} md={8} lg={4}>
                     <Card>
-                      <Link>
+                      <Link to={`book-room/${room.id}`}>
                         <Card.Img
                           variant="top"
                           src={`data:image/png;base64, ${room.photo}`}
                           alt="Room Photo"
                           className="w-100"
-                          style={{ height: "250px" }}
+                          style={{ height: "220px" }}
                         />
                       </Link>
                       <Card.Body>
-                        <Card.Title className="hotel-color">
-                          {room.roomType}
-                        </Card.Title>
-                        <Card.Title className="room-price">
-                          ${room.roomPrice}/night
+                        <Card.Title className="">{room.roomType}</Card.Title>
+                        <Card.Title className="">
+                          {room.roomPrice}€ /night
                         </Card.Title>
                         <div className="flex-shrink-0">
-                          <Link className="btn btn-hotel btn-sm">Book Now</Link>
+                          <Link className="btn btn-primary">Book Now</Link>
                         </div>
                       </Card.Body>
                     </Card>

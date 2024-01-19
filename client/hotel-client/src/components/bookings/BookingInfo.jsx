@@ -59,10 +59,10 @@ function BookingInfo({
         <div>
           <h5 className="hotel-color mb-3">Number of Guests</h5>
           <p>
-            <strong>Adults:</strong> {booking.numOfAdults}
+            <strong>Adults:</strong> {booking.numberOfAdults}
           </p>
           <p>
-            <strong>Children:</strong> {booking.numOfChildren}
+            <strong>Children:</strong> {booking.numberOfChildren}
           </p>
         </div>
         {payment > 0 ? (

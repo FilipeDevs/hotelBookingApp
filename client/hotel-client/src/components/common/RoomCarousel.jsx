@@ -58,7 +58,12 @@ function RoomCarousel() {
                           {room.roomPrice}€ /night
                         </Card.Title>
                         <div className="flex-shrink-0">
-                          <Link className="btn btn-primary">Book Now</Link>
+                          <Link
+                            className="btn btn-primary"
+                            to={`book-room/${room.id}`}
+                          >
+                            Book Now
+                          </Link>
                         </div>
                       </Card.Body>
                     </Card>

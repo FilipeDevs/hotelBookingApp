@@ -60,7 +60,7 @@ function FindBooking() {
     setTimeout(() => setIsLoading(false), 2000);
   };
 
-  const handleBookingCancellation = async (bookingId) => {
+  const handleBookingCancellation = async () => {
     try {
       await cancelBooking(bookingInfo.id);
       setIsDeleted(true);

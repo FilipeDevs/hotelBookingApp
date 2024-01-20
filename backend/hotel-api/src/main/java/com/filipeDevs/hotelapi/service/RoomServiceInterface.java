@@ -2,6 +2,7 @@ package com.filipeDevs.hotelapi.service;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.io.IOException;
@@ -24,4 +25,7 @@ public interface RoomServiceInterface {
     Room updateRoom(Long roomId, String roomType, BigDecimal roomPrice, String description, byte[] photoBytes);
 
     public Optional<Room> getRoomById(Long roomId);
+
+    public List<Room> getAvailableRooms(LocalDate checkInDate, LocalDate checkOutDate, String roomType);
+
 }

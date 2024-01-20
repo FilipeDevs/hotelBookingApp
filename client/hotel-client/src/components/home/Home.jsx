@@ -1,6 +1,7 @@
 import HotelService from "../common/HotelService";
 import ParallaxScrolling from "../common/ParallaxScrolling";
 import RoomCarousel from "../common/RoomCarousel";
+import RoomSearch from "../common/RoomSearch";
 import HeaderMain from "../layout/HeaderMain";
 
 function Home() {
@@ -8,6 +9,7 @@ function Home() {
     <section>
       <HeaderMain />
       <div className="container">
+        <RoomSearch />
         <RoomCarousel />
         <ParallaxScrolling />
         <HotelService />

@@ -1,33 +1,30 @@
 package com.filipeDevs.hotelapi.service;
 
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.filipeDevs.hotelapi.exception.ResourceNotFoundException;
 import com.filipeDevs.hotelapi.model.BookedRoom;
 import com.filipeDevs.hotelapi.model.Room;
 import com.filipeDevs.hotelapi.repository.BookingRepository;
-import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
-public class BookingService implements BookingServiceInterface {
+public class BookingService {
 
-    private final BookingRepository bookingRepository;
+    @Autowired
+    private BookingRepository bookingRepository;
 
-    private final RoomServiceInterface roomService;
+    @Autowired
+    private RoomService roomService;
 
-    @Override
     public List<BookedRoom> getAllBookingsByRoomId(Long roomId) {
         return bookingRepository.findByRoomId(roomId);
     }
 
-    @Override
     public List<BookedRoom> getAllBookings() {
         return bookingRepository.findAll();
     }
 
-    @Override
     public BookedRoom findByBookingConfirmationCode(String confirmationCode) {
         return bookingRepository.findByBookingConfirmationCode(confirmationCode)
                 .orElseThrow(
@@ -35,12 +32,10 @@ public class BookingService implements BookingServiceInterface {
 
     }
 
-    @Override
     public void cancelBooking(Long bookingId) {
         bookingRepository.deleteById(bookingId);
     }
 
-    @Override
     public String saveBooking(Long roomId, BookedRoom bookingRequest) {
         if (bookingRequest.getCheckOutDate().isBefore(bookingRequest.getCheckInDate())) {
             throw new IllegalArgumentException("Check-in date must come before check-out date");

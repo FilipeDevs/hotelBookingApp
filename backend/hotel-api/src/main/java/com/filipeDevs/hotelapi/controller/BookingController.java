@@ -2,7 +2,7 @@ package com.filipeDevs.hotelapi.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,25 +13,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.filipeDevs.hotelapi.exception.ResourceNotFoundException;
 import com.filipeDevs.hotelapi.model.BookedRoom;
 import com.filipeDevs.hotelapi.model.Room;
 import com.filipeDevs.hotelapi.response.BookingResponse;
 import com.filipeDevs.hotelapi.response.RoomResponse;
-import com.filipeDevs.hotelapi.service.BookingServiceInterface;
-import com.filipeDevs.hotelapi.service.RoomServiceInterface;
-
-import lombok.RequiredArgsConstructor;
+import com.filipeDevs.hotelapi.service.BookingService;
+import com.filipeDevs.hotelapi.service.RoomService;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/bookings")
 @CrossOrigin(origins = "*")
 public class BookingController {
 
-    private final BookingServiceInterface bookingService;
-    private final RoomServiceInterface roomService;
+    @Autowired
+    private BookingService bookingService;
+
+    @Autowired
+    private RoomService roomService;
 
     @GetMapping("/all")
     public ResponseEntity<List<BookingResponse>> getAllBookings() {

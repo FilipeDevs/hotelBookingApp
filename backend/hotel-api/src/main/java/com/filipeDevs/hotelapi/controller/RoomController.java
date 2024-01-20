@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,19 +29,19 @@ import com.filipeDevs.hotelapi.model.BookedRoom;
 import com.filipeDevs.hotelapi.model.Room;
 import com.filipeDevs.hotelapi.response.BookingResponse;
 import com.filipeDevs.hotelapi.response.RoomResponse;
-import com.filipeDevs.hotelapi.service.BookingServiceInterface;
-import com.filipeDevs.hotelapi.service.RoomServiceInterface;
-import lombok.RequiredArgsConstructor;
+import com.filipeDevs.hotelapi.service.BookingService;
+import com.filipeDevs.hotelapi.service.RoomService;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/rooms")
 @CrossOrigin(origins = "*")
 public class RoomController {
 
-    private final RoomServiceInterface roomService;
+    @Autowired
+    private RoomService roomService;
 
-    private final BookingServiceInterface bookingService;
+    @Autowired
+    private BookingService bookingService;
 
     @PostMapping("/add/new-room")
     public ResponseEntity<RoomResponse> addNewRoom(

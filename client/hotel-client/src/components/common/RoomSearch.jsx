@@ -113,18 +113,20 @@ function RoomSearch() {
         </Form>
 
         {isLoading ? (
-          <p className="mt-4">Finding availble rooms....</p>
+          <p className="mt-4 text-center">Finding availble rooms....</p>
         ) : availableRooms ? (
           <RoomSearchResults
             results={availableRooms}
             onClearSearch={handleClearSearch}
           />
         ) : (
-          <p className="mt-4">
+          <p className="mt-4 text-center">
             No rooms available for the selected dates and room type.
           </p>
         )}
-        {errorMessage && <p className="text-danger">{errorMessage}</p>}
+        {errorMessage && (
+          <p className="text-danger text-center">{errorMessage}</p>
+        )}
       </Container>
     </>
   );

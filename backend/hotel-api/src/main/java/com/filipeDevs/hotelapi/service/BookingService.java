@@ -32,7 +32,10 @@ public class BookingService {
 
     }
 
-    public void cancelBooking(Long bookingId) {
+    public void cancelBooking(Long bookingId, String email) {
+        if(bookingRepository.findByGuestEmail(email).isEmpty()) {
+            throw new IllegalArgumentException("User is not the owner of this booking");
+        }
         bookingRepository.deleteById(bookingId);
     }
 

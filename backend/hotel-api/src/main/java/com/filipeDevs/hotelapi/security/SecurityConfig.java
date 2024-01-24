@@ -58,8 +58,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**", "/rooms/**","/bookings/**")
-                        .permitAll().requestMatchers("/roles/**").hasRole("ADMIN")
-                        .anyRequest().authenticated());
+                        .permitAll());
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();

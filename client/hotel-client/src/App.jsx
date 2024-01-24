@@ -13,6 +13,7 @@ import Checkout from "./components/bookings/Checkout";
 import BookingSuccess from "./components/bookings/BookingSuccess";
 import Bookings from "./components/bookings/Bookings";
 import FindBooking from "./components/bookings/FindBooking";
+import Register from "./components/auth/Register";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/edit-room/:roomId" element={<EditRoom />} />
           <Route path="/existing-rooms" element={<ExistingRooms />} />
           <Route path="/add-room" element={<AddRoom />} />

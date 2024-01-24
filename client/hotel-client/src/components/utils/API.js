@@ -124,3 +124,68 @@ export async function getAvailableRooms(checkInDate, checkOutDate, roomType) {
   );
   return result;
 }
+
+export async function register(register) {
+  try {
+    const response = await axiosClient.post("/auth/register", register);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.data) {
+      throw new Error(error.response.data);
+    } else {
+      throw new Error(`Error while registering user ${error.message}`);
+    }
+  }
+}
+
+/* This function login a registered user */
+export async function loginUser(login) {
+  try {
+    const response = await axiosClient.post("/auth/login", login);
+    if (response.status >= 200 && response.status < 300) {
+      return response.data;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+export async function getUserProfile(userId) {
+  try {
+    const response = await axiosClient.get(`users/profile/${userId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error("Error while fetching user profile");
+  }
+}
+
+export async function deleteUser(userId) {
+  try {
+    const response = await axiosClient.delete(`/users/delete/${userId}`);
+    return response.data;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export async function getUser(userId) {
+  try {
+    const response = await axiosClient.get(`/users/${userId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error("Error while fetching user");
+  }
+}
+
+export async function getBookingsByUserId(userId) {
+  try {
+    const response = await axiosClient.get(`/bookings/user/${userId}/bookings`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching bookings:", error.message);
+    throw new Error("Failed to fetch bookings");
+  }
+}

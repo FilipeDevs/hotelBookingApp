@@ -1,6 +1,8 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { deleteUser, getUser, getBookingsByUserId } from "../utils/API";
+import { useAuthContext } from "./AuthProvider";
 
 function Profile() {
   const [user, setUser] = useState({
@@ -24,13 +26,12 @@ function Profile() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const userId = localStorage.getItem("userId");
-  const token = localStorage.getItem("token");
+  const { userId } = useAuthContext();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const userData = await getUser(userId, token);
+        const userData = await getUser(userId);
         setUser(userData);
       } catch (error) {
         console.error(error);
@@ -43,7 +44,7 @@ function Profile() {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await getBookingsByUserId(userId, token);
+        const response = await getBookingsByUserId(userId);
         setBookings(response);
       } catch (error) {
         console.error("Error fetching bookings:", error.message);
@@ -105,16 +106,7 @@ function Profile() {
 
                   <div className="col-md-10">
                     <div className="card-body">
-                      <div className="form-group row">
-                        <label className="col-md-2 col-form-label fw-bold">
-                          ID:
-                        </label>
-                        <div className="col-md-10">
-                          <p className="card-text">{user.id}</p>
-                        </div>
-                      </div>
                       <hr />
-
                       <div className="form-group row">
                         <label className="col-md-2 col-form-label fw-bold">
                           First Name:
@@ -186,17 +178,23 @@ function Profile() {
                         <td>{booking.room.id}</td>
                         <td>{booking.room.roomType}</td>
                         <td>
-                          {moment(booking.checkInDate)
-                            .subtract(1, "month")
-                            .format("MMM Do, YYYY")}
+                          {moment(booking.checkInDate).format("MMM Do, YYYY")}
                         </td>
                         <td>
-                          {moment(booking.checkOutDate)
-                            .subtract(1, "month")
-                            .format("MMM Do, YYYY")}
+                          {moment(booking.checkOutDate).format("MMM Do, YYYY")}
                         </td>
                         <td>{booking.bookingConfirmationCode}</td>
-                        <td className="text-success">On-going</td>
+                        <td
+                          className={
+                            moment().isAfter(booking.checkOutDate)
+                              ? "text-danger"
+                              : "text-success"
+                          }
+                        >
+                          {moment().isAfter(booking.checkOutDate)
+                            ? "Completed"
+                            : "On-going"}
+                        </td>
                       </tr>
                     ))}
                   </tbody>

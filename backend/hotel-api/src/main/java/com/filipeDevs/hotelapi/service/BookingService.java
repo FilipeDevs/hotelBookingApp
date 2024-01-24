@@ -36,6 +36,10 @@ public class BookingService {
         bookingRepository.deleteById(bookingId);
     }
 
+    public List<BookedRoom> getBookingsByUserEmail(String email) {
+        return bookingRepository.findByGuestEmail(email);
+    }
+
     public String saveBooking(Long roomId, BookedRoom bookingRequest) {
         if (bookingRequest.getCheckOutDate().isBefore(bookingRequest.getCheckInDate())) {
             throw new IllegalArgumentException("Check-in date must come before check-out date");
@@ -74,5 +78,6 @@ public class BookingService {
                         || (bookingRequest.getCheckInDate().equals(existingBooking.getCheckOutDate())
                                 && bookingRequest.getCheckOutDate().equals(bookingRequest.getCheckInDate())));
     }
+
 
 }

@@ -4,6 +4,7 @@ import { bookRoom, getRoomById } from "../utils/API";
 import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 import BookingInfo from "./BookingInfo";
+import { useAuthContext } from "../auth/AuthProvider";
 
 function BookingForm({ roomPrice }) {
   const [validated, setValidated] = useState(false);
@@ -11,9 +12,11 @@ function BookingForm({ roomPrice }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
 
+  const { userId } = useAuthContext();
+
   const [booking, setBooking] = useState({
     guestFullName: "",
-    guestEmail: "",
+    guestEmail: userId,
     checkInDate: "",
     checkOutDate: "",
     numberOfAdults: 1,
@@ -117,6 +120,7 @@ function BookingForm({ roomPrice }) {
               value={booking.guestEmail}
               placeholder="Enter your email"
               onChange={handleInputChange}
+              disabled
             />
             <Form.Control.Feedback type="invalid">
               Please enter a valid email address.

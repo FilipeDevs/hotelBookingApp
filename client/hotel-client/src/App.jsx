@@ -17,6 +17,7 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Profile from "./components/auth/Profile";
 import { AuthProvider } from "./components/auth/AuthProvider";
+import RequireAuth from "./components/auth/RequireAuth";
 
 function App() {
   return (
@@ -28,13 +29,24 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+
             <Route path="/profile" element={<Profile />} />
+
             <Route path="/edit-room/:roomId" element={<EditRoom />} />
             <Route path="/existing-rooms" element={<ExistingRooms />} />
             <Route path="/add-room" element={<AddRoom />} />
             <Route path="/browse-all-rooms" element={<Room />} />
             <Route path="/admin" element={<Admin />} />
-            <Route path="/book-room/:roomId" element={<Checkout />} />
+
+            <Route
+              path="/book-room/:roomId"
+              element={
+                <RequireAuth>
+                  <Checkout />
+                </RequireAuth>
+              }
+            />
+
             <Route path="/booking-success" element={<BookingSuccess />} />
             <Route path="/existing-bookings" element={<Bookings />} />
             <Route path="/find-booking" element={<FindBooking />} />

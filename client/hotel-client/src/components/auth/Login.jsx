@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuthContext } from "./AuthProvider";
 import { loginUser } from "../utils/API";
+import { Container, Alert, Form, Button, Stack } from "react-bootstrap";
 
-export default function Login() {
+function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const [login, setLogin] = useState({
     email: "",
@@ -35,55 +36,50 @@ export default function Login() {
   };
 
   return (
-    <section className="container col-6 mt-5 mb-5">
-      {errorMessage && <p className="alert alert-danger">{errorMessage}</p>}
+    <Container className="col-6 mt-5 mb-5">
+      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="row mb-3">
-          <label htmlFor="email" className="col-sm-2 col-form-label">
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="email" column sm={2}>
             Email
-          </label>
-          <div>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              className="form-control"
-              value={login.email}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
+          </Form.Label>
+          <Form.Control
+            id="email"
+            name="email"
+            type="email"
+            value={login.email}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
 
-        <div className="row mb-3">
-          <label htmlFor="password" className="col-sm-2 col-form-label">
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="password" column sm={2}>
             Password
-          </label>
-          <div>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              className="form-control"
-              value={login.password}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
+          </Form.Label>
 
-        <div className="mb-3">
-          <button
-            type="submit"
-            className="btn btn-hotel"
-            style={{ marginRight: "10px" }}
-          >
-            Login
-          </button>
-          <span style={{ marginLeft: "10px" }}>
-            Don't' have an account yet?<Link to={"/register"}> Register</Link>
-          </span>
-        </div>
-      </form>
-    </section>
+          <Form.Control
+            id="password"
+            name="password"
+            type="password"
+            value={login.password}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Stack direction="horizontal" gap={3}>
+          <div className="">
+            <Button type="submit">Login</Button>
+          </div>
+          <div className="p-2">
+            <span className="">
+              Don't have an account yet? <Link to="/register">Register</Link>
+            </span>
+          </div>
+        </Stack>
+      </Form>
+    </Container>
   );
 }
+
+export default Login;

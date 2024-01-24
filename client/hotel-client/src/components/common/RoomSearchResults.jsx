@@ -21,7 +21,7 @@ function RoomSearchResults({ results, onClearSearch }) {
     <>
       {results.length > 0 ? (
         <>
-          <h5 className="text-center mt-5">Search Results</h5>
+          <h5 className="text-center mt-4 mb-4">Search Results</h5>
           <Row>
             {paginatedResults.map((room) => (
               <RoomCard key={room.id} room={room} />
@@ -35,10 +35,14 @@ function RoomSearchResults({ results, onClearSearch }) {
                 onPageChange={handlePageChange}
               />
             )}
-            <Button variant="secondary" onClick={onClearSearch}>
-              Clear Search
-            </Button>
           </Row>
+          <Button
+            variant="secondary"
+            className="mx-auto d-block"
+            onClick={onClearSearch}
+          >
+            Clear Search
+          </Button>
         </>
       ) : (
         <p></p>

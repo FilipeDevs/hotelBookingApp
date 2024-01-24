@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { getRoomTypes } from "../utils/API";
 
-function RoomTypeSelector({ handleRoomInputChange, newRoom }) {
+function RoomTypeSelector({
+  handleRoomInputChange,
+  newRoom,
+  disableAddNewRoomType,
+}) {
   const [roomTypes, setRoomTypes] = useState([""]);
   const [showNewRoomTypeInput, setShowNewRoomTypeInput] = useState(false);
   const [newRoomType, setNewRoomType] = useState("");
@@ -32,7 +36,7 @@ function RoomTypeSelector({ handleRoomInputChange, newRoom }) {
           className="form-select"
           name="roomType"
           onChange={(e) => {
-            if (e.target.value === "Add New") {
+            if (e.target.value === "Add New" && !disableAddNewRoomType) {
               setShowNewRoomTypeInput(true);
             } else {
               handleRoomInputChange(e);
@@ -43,7 +47,7 @@ function RoomTypeSelector({ handleRoomInputChange, newRoom }) {
           <option value="" disabled>
             Select a room type
           </option>
-          <option value={"Add New"}>Add New</option>
+          {!disableAddNewRoomType && <option value={"Add New"}>Add New</option>}
           {roomTypes.map((type, index) => (
             <option key={index} value={type}>
               {type}

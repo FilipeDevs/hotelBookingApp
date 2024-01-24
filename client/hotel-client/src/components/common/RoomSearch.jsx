@@ -18,6 +18,7 @@ function RoomSearch() {
 
   const handleSearch = (e) => {
     e.preventDefault();
+    setErrorMessage("");
     const checkInMoment = moment(searchQuery.checkInDate);
     const checkOutMoment = moment(searchQuery.checkOutDate);
     if (!checkInMoment.isValid() || !checkOutMoment.isValid()) {
@@ -66,7 +67,7 @@ function RoomSearch() {
 
   return (
     <>
-      <Container className="shadow mt-n5 mb-5 py-5">
+      <Container className="shadow mt-5 mb-5 py-5">
         <Form onSubmit={handleSearch}>
           <Row className="justify-content-center">
             <Col xs={12} md={3}>
@@ -100,6 +101,7 @@ function RoomSearch() {
                   <RoomTypeSelector
                     handleRoomInputChange={handleInputChange}
                     newRoom={searchQuery}
+                    disableAddNewRoomType={true}
                   />
                   <Button variant="secondary" type="submit" className="ml-2">
                     Search

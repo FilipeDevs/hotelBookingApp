@@ -1,8 +1,4 @@
-import axios from "axios";
-
-export const api = axios.create({
-  baseURL: "http://localhost:9192",
-});
+import axiosClient from "./axios-client";
 
 export async function addRoom(photo, roomType, roomPrice, roomDescription) {
   const formData = new FormData();
@@ -11,7 +7,7 @@ export async function addRoom(photo, roomType, roomPrice, roomDescription) {
   formData.append("roomPrice", roomPrice);
   formData.append("description", roomDescription);
 
-  const response = await api.post("/rooms/add/new-room", formData);
+  const response = await axiosClient.post("/rooms/add/new-room", formData);
 
   if (response.status === 201) {
     return true;
@@ -22,7 +18,7 @@ export async function addRoom(photo, roomType, roomPrice, roomDescription) {
 
 export async function getRoomTypes() {
   try {
-    const response = await api.get("/rooms/room/types");
+    const response = await axiosClient.get("/rooms/room/types");
     return response.data;
   } catch (error) {
     throw new Error("Error while fetching room types");
@@ -31,7 +27,7 @@ export async function getRoomTypes() {
 
 export async function getAllRooms() {
   try {
-    const response = await api.get("/rooms/all");
+    const response = await axiosClient.get("/rooms/all");
     return response.data;
   } catch (error) {
     throw new Error("Error while fetching rooms");
@@ -40,7 +36,7 @@ export async function getAllRooms() {
 
 export async function deleteRoom(roomId) {
   try {
-    const response = await api.delete(`/rooms/delete/${roomId}`);
+    const response = await axiosClient.delete(`/rooms/delete/${roomId}`);
     return response.data;
   } catch (error) {
     throw new Error("Error while deleting room");
@@ -59,13 +55,13 @@ export async function updateRoom(roomId, roomData) {
     formData.append("photo", roomData.photo);
   }
 
-  const response = await api.put(`/rooms/update/${roomId}`, formData);
+  const response = await axiosClient.put(`/rooms/update/${roomId}`, formData);
   return response;
 }
 
 export async function getRoomById(roomId) {
   try {
-    const response = await api.get(`/rooms/${roomId}`);
+    const response = await axiosClient.get(`/rooms/${roomId}`);
     return response.data;
   } catch (error) {
     throw new Error("Error while fetching room");
@@ -74,7 +70,10 @@ export async function getRoomById(roomId) {
 
 export async function bookRoom(roomId, booking) {
   try {
-    const response = await api.post(`/bookings/book/${roomId}`, booking);
+    const response = await axiosClient.post(
+      `/bookings/book/${roomId}`,
+      booking
+    );
     return response.data;
   } catch (error) {
     if (error.response && error.response.data) {
@@ -87,7 +86,7 @@ export async function bookRoom(roomId, booking) {
 
 export async function getAllBookings() {
   try {
-    const response = await api.get("/bookings/all");
+    const response = await axiosClient.get("/bookings/all");
     return response.data;
   } catch (error) {
     throw new Error("Error while fetching bookings");
@@ -96,7 +95,7 @@ export async function getAllBookings() {
 
 export async function getBookingByConfirmationCode(confirmationCode) {
   try {
-    const response = await api.get(
+    const response = await axiosClient.get(
       `/bookings/confirmation/${confirmationCode}`
     );
     return response.data;
@@ -111,7 +110,7 @@ export async function getBookingByConfirmationCode(confirmationCode) {
 
 export async function cancelBooking(bookingId) {
   try {
-    const response = await api.delete(`/bookings/cancel/${bookingId}`);
+    const response = await axiosClient.delete(`/bookings/cancel/${bookingId}`);
     return response.data;
   } catch (error) {
     throw new Error("Error while cancelling booking");
@@ -119,7 +118,7 @@ export async function cancelBooking(bookingId) {
 }
 
 export async function getAvailableRooms(checkInDate, checkOutDate, roomType) {
-  const result = await api.get(
+  const result = await axiosClient.get(
     `rooms/available?checkInDate=${checkInDate}
 		&checkOutDate=${checkOutDate}&roomType=${roomType}`
   );

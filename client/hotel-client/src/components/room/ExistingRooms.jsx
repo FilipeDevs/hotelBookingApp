@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { deleteRoom, getAllRooms } from "../utils/API";
-import { Col, Row } from "react-bootstrap";
+import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import RoomFilter from "../common/RoomFilter";
 import RoomPaginator from "../common/RoomPaginator";
 import { FaEye, FaPlus, FaTrashAlt } from "react-icons/fa";
@@ -81,85 +81,81 @@ function ExistingRooms() {
   const currentRooms = filteredRooms.slice(indexOfFirstRoom, indexOfLastRoom);
 
   return (
-    <>
-      <div className="container col-md-8 col-lg-6">
-        {successMessage && (
-          <p className="alert alert-success mt-5">{successMessage}</p>
-        )}
-
-        {errorMessage && (
-          <p className="alert alert-danger mt-5">{errorMessage}</p>
-        )}
-      </div>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          <section className="mt-5 mb-5 container">
-            <div className="d-flex justify-content-between mb-3 mt-5">
-              <h2>Existing Rooms</h2>
-            </div>
-            <Row>
-              <Col md={6} className="mb-3 mb-md-0">
-                <RoomFilter
-                  data={rooms}
-                  setFilteredData={setFilteredRooms}
-                ></RoomFilter>
-              </Col>
-              <Col md={6} className="d-flex justify-content-end">
-                <Link to={"/add-room"}>
-                  <FaPlus />
-                  Add Room
-                </Link>
-              </Col>
-            </Row>
-
-            <table className="table table-bordered table-hover">
-              <thead>
-                <tr className="text-center">
-                  <th>ID</th>
-                  <th>Room Type</th>
-                  <th>Room Price</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {currentRooms.map((room) => (
-                  <tr key={room.id} className="text-center">
-                    <td>{room.id}</td>
-                    <td>{room.roomType}</td>
-                    <td>{room.roomPrice}</td>
-                    <td className="gap-2">
-                      <Link to={`/edit-room/${room.id}`}>
-                        <span className="btn btn-info btn-sm">
-                          <FaEye />
-                        </span>
-                      </Link>
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={() => handleDelete(room.id)}
-                      >
-                        <FaTrashAlt />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <RoomPaginator
-              currentPage={currentPage}
-              totalPages={calculateTotalPages(
-                filteredRooms,
-                roomsPerPage,
-                rooms
-              )}
-              onPageChange={handlePaginationClick}
-            />
-          </section>
-        </>
+    <Container className="col-md-8 col-lg-6">
+      {successMessage && (
+        <p className="alert alert-success mt-5">{successMessage}</p>
       )}
-    </>
+      {errorMessage && (
+        <p className="alert alert-danger mt-5">{errorMessage}</p>
+      )}
+
+      {isLoading ? (
+        <p className="container text-center mt-5">Loading...</p>
+      ) : (
+        <section>
+          <Row className="d-flex justify-content-between mb-3 mt-5">
+            <h2>Existing Rooms</h2>
+          </Row>
+
+          <Row>
+            <Col md={6} className="mb-3 mb-md-0">
+              <RoomFilter
+                data={rooms}
+                setFilteredData={setFilteredRooms}
+              ></RoomFilter>
+            </Col>
+            <Col md={6} className="d-flex justify-content-end">
+              <Link to="/add-room">
+                <Button variant="link">
+                  <FaPlus /> Add Room
+                </Button>
+              </Link>
+            </Col>
+          </Row>
+
+          <Table bordered hover>
+            <thead>
+              <tr className="text-center">
+                <th>ID</th>
+                <th>Room Type</th>
+                <th>Room Price</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {currentRooms.map((room) => (
+                <tr key={room.id} className="text-center">
+                  <td>{room.id}</td>
+                  <td>{room.roomType}</td>
+                  <td>{room.roomPrice} €</td>
+                  <td className="gap-2">
+                    <Link to={`/edit-room/${room.id}`}>
+                      <Button variant="info" size="sm">
+                        <FaEye />
+                      </Button>
+                    </Link>
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      onClick={() => handleDelete(room.id)}
+                    >
+                      <FaTrashAlt />
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+
+          <RoomPaginator
+            currentPage={currentPage}
+            totalPages={calculateTotalPages(filteredRooms, roomsPerPage, rooms)}
+            onPageChange={handlePaginationClick}
+          />
+        </section>
+      )}
+    </Container>
   );
 }
 

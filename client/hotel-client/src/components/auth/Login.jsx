@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuthContext } from "./AuthProvider";
 import { loginUser } from "../utils/API";
 import { Container, Alert, Form, Button, Stack } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 function Login() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -26,6 +27,7 @@ function Login() {
     if (success) {
       const token = success.token;
       auth.handleLogin(token);
+      toast.success("Login successful!");
       navigate(redirectUrl, { replace: true });
     } else {
       setErrorMessage("Invalid username or password. Please try again.");

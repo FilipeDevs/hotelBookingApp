@@ -18,6 +18,8 @@ import Login from "./components/auth/Login";
 import Profile from "./components/auth/Profile";
 import { AuthProvider } from "./components/auth/AuthProvider";
 import RequireAuth from "./components/auth/RequireAuth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -54,6 +56,7 @@ function App() {
         </Router>
         <Footer />
       </main>
+      <ToastContainer position="top-center" />
     </AuthProvider>
   );
 }

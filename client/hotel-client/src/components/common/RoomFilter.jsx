@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button, FormControl, InputGroup } from "react-bootstrap";
 
 function RoomFilter({ data, setFilteredData }) {
   const [filter, setFilter] = useState("");
@@ -22,16 +23,12 @@ function RoomFilter({ data, setFilteredData }) {
   const roomTypes = [...new Set(data.map((room) => room.roomType))];
 
   return (
-    <div className="input-group mb-3">
-      <span className="input-group-text" id="room-type-filter">
+    <InputGroup className="mb-3">
+      <InputGroup.Text id="room-type-filter">
         Filter Rooms By Type
-      </span>
-      <select
-        className="form-select"
-        value={filter}
-        onChange={handleSelectChange}
-      >
-        <option value={""} disabled>
+      </InputGroup.Text>
+      <FormControl as="select" value={filter} onChange={handleSelectChange}>
+        <option value="" disabled>
           Select a room to filter...
         </option>
         {roomTypes.map((roomType, index) => (
@@ -39,15 +36,11 @@ function RoomFilter({ data, setFilteredData }) {
             {roomType}
           </option>
         ))}
-      </select>
-      <button
-        className="btn btn-primary"
-        type="button"
-        onClick={handleClearFilter}
-      >
+      </FormControl>
+      <Button variant="primary" type="button" onClick={handleClearFilter}>
         Clear Filter
-      </button>
-    </div>
+      </Button>
+    </InputGroup>
   );
 }
 

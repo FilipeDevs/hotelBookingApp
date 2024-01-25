@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuthContext } from "./AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Logout() {
   const auth = useAuthContext();
@@ -8,7 +9,8 @@ function Logout() {
 
   const handleLogout = () => {
     auth.handleLogout();
-    navigate("/", { state: { message: " You have been logged out!" } });
+    toast.success("Logout successful!");
+    navigate("/");
   };
 
   return (

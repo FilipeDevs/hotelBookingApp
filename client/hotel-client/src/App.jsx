@@ -3,7 +3,7 @@ import "/node_modules/bootstrap/dist/js/bootstrap.min.js";
 import AddRoom from "./components/room/AddRoom";
 import ExistingRooms from "./components/room/ExistingRooms";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/layout/Navbar";
+import MainNavbar from "./components/layout/MainNavbar";
 import Footer from "./components/layout/Footer";
 import Home from "./components/home/Home";
 import EditRoom from "./components/room/EditRoom";
@@ -18,7 +18,7 @@ import Login from "./components/auth/Login";
 import Profile from "./components/auth/Profile";
 import { AuthProvider } from "./components/auth/AuthProvider";
 import RequireAuth from "./components/auth/RequireAuth";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
     <AuthProvider>
       <main>
         <Router>
-          <Navbar />
+          <MainNavbar />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />

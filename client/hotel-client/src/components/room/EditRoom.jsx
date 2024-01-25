@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getRoomById, updateRoom } from "../utils/API";
 import { Link, useParams } from "react-router-dom";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 function EditRoom() {
   const { roomId } = useParams();
@@ -65,10 +66,10 @@ function EditRoom() {
   };
 
   return (
-    <div className="container mt-5 mb-5">
+    <Container className="mt-5 mb-5">
       <h3 className="text-center mb-5 mt-5">Edit Room</h3>
-      <div className="row justify-content-center">
-        <div className="col-md-8 col-lg-6">
+      <Row className="justify-content-center">
+        <Col md={8} lg={6}>
           {successMessage && (
             <div className="alert alert-success" role="alert">
               {successMessage}
@@ -79,53 +80,56 @@ function EditRoom() {
               {errorMessage}
             </div>
           )}
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="roomType" className="form-label hotel-color">
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label htmlFor="roomType" className="form-label hotel-color">
                 Room Type
-              </label>
-              <input
+              </Form.Label>
+              <Form.Control
                 type="text"
-                className="form-control"
                 id="roomType"
                 name="roomType"
                 value={room.roomType}
                 onChange={handleRoomInputChange}
               />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="roomPrice" className="form-label hotel-color">
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label
+                htmlFor="roomPrice"
+                className="form-label hotel-color"
+              >
                 Room Price
-              </label>
-              <input
+              </Form.Label>
+              <Form.Control
                 type="number"
-                className="form-control"
                 id="roomPrice"
                 name="roomPrice"
                 value={room.roomPrice}
                 onChange={handleRoomInputChange}
               />
-            </div>
-            <div className="mb-3">
-              <label className="form-label hotel-color" htmlFor="description">
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label
+                className="form-label hotel-color"
+                htmlFor="description"
+              >
                 Room Description
-              </label>
-              <textarea
-                className="form-control"
+              </Form.Label>
+              <Form.Control
+                as="textarea"
                 required
                 id="description"
                 name="description"
                 value={room.description}
                 onChange={handleRoomInputChange}
               />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="photo" className="form-label hotel-color">
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label htmlFor="photo" className="form-label hotel-color">
                 Photo
-              </label>
-              <input
+              </Form.Label>
+              <Form.Control
                 type="file"
-                className="form-control"
                 id="photo"
                 name="photo"
                 onChange={handleImageChange}
@@ -138,22 +142,19 @@ function EditRoom() {
                   className="mt-3"
                 />
               )}
-            </div>
+            </Form.Group>
             <div className="d-grid gap-2 d-md-flex mt-2">
-              <Link
-                to={"/existing-rooms"}
-                className="btn btn-outline-info ml-5"
-              >
+              <Link to="/existing-rooms" className="btn btn-info ml-5">
                 Back
               </Link>
-              <button type="submit" className="btn btn-outline-warning">
+              <Button type="submit" className="btn btn-warning">
                 Edit Room
-              </button>
+              </Button>
             </div>
-          </form>
-        </div>
-      </div>
-    </div>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

@@ -16,14 +16,6 @@ axiosClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    const { response } = error;
-
-    if (response.status === 401) {
-      localStorage.removeItem("JWT_TOKEN");
-      localStorage.removeItem("USER_ID");
-      localStorage.removeItem("USER_ROLE");
-    }
-
     throw error;
   }
 );

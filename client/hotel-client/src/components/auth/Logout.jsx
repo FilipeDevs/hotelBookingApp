@@ -1,16 +1,17 @@
 import React from "react";
 import { useAuthContext } from "./AuthProvider";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function Logout() {
   const auth = useAuthContext();
-  const navigate = useNavigate();
+  const location = useLocation();
+  const redirectUrl = location.state?.path || "/";
 
   const handleLogout = () => {
     auth.handleLogout();
     toast.success("Logout successful!");
-    navigate("/");
+    window.location.replace(redirectUrl);
   };
 
   return (

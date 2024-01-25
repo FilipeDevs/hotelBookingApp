@@ -12,7 +12,6 @@ function Login() {
     password: "",
   });
 
-  const navigate = useNavigate();
   const auth = useAuthContext();
   const location = useLocation();
   const redirectUrl = location.state?.path || "/";
@@ -28,7 +27,7 @@ function Login() {
       const token = success.token;
       auth.handleLogin(token);
       toast.success("Login successful!");
-      navigate(redirectUrl, { replace: true });
+      window.location.replace(redirectUrl);
     } else {
       setErrorMessage("Invalid username or password. Please try again.");
     }

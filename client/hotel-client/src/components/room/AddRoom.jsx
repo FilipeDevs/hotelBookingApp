@@ -2,6 +2,7 @@ import { useState } from "react";
 import { addRoom } from "../utils/API";
 import RoomTypeSelector from "../common/RoomTypeSelector";
 import { Link } from "react-router-dom";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 function AddRoom() {
   const [newRoom, setNewRoom] = useState({
@@ -49,7 +50,7 @@ function AddRoom() {
         setErrorMessage("Unable to add room");
       }
     } catch (error) {
-      setErrorMessage(error.message);
+      setErrorMessage("Unable to add room");
     }
 
     // Clear the feedback messages after 5 seconds
@@ -60,93 +61,81 @@ function AddRoom() {
   };
 
   return (
-    <>
-      <section className="container, mt-5 mb-5">
-        <div className="row justify-content-center">
-          <div className="col-md-8 col-lg-6">
-            <h2 className="mt-5 mb-2">Add a New Room</h2>
-            {successMessage && (
-              <div className="alert alert-success fade show">
-                {successMessage}
-              </div>
-            )}
+    <Container className="mt-5 mb-5">
+      <Row className="justify-content-center">
+        <Col md={8} lg={6}>
+          <h2 className="mt-5 mb-2">Add a New Room</h2>
+          {successMessage && (
+            <div className="alert alert-success fade show">
+              {successMessage}
+            </div>
+          )}
 
-            {errorMessage && (
-              <div className="alert alert-danger fade show">{errorMessage}</div>
-            )}
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label className="form-label" htmlFor="roomType">
-                  Room Type
-                </label>
-                <div>
-                  <RoomTypeSelector
-                    handleRoomInputChange={handleRoomInputChange}
-                    newRoom={newRoom}
-                  />
-                </div>
-              </div>
-              <div className="mb-3">
-                <label className="form-label" htmlFor="roomPrice">
-                  Room Price
-                </label>
-                <input
-                  type="number"
-                  className="form-control"
-                  required
-                  id="roomPrice"
-                  name="roomPrice"
-                  value={newRoom.roomPrice}
-                  onChange={handleRoomInputChange}
+          {errorMessage && (
+            <div className="alert alert-danger fade show">{errorMessage}</div>
+          )}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label htmlFor="roomType">Room Type</Form.Label>
+              <div>
+                <RoomTypeSelector
+                  handleRoomInputChange={handleRoomInputChange}
+                  newRoom={newRoom}
                 />
               </div>
-              <div className="mb-3">
-                <label className="form-label" htmlFor="description">
-                  Room Description
-                </label>
-                <textarea
-                  className="form-control"
-                  required
-                  id="description"
-                  name="description"
-                  value={newRoom.description}
-                  onChange={handleRoomInputChange}
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label htmlFor="roomPrice">Room Price</Form.Label>
+              <Form.Control
+                type="number"
+                required
+                id="roomPrice"
+                name="roomPrice"
+                value={newRoom.roomPrice}
+                onChange={handleRoomInputChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label htmlFor="description">Room Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                required
+                id="description"
+                name="description"
+                value={newRoom.description}
+                onChange={handleRoomInputChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label htmlFor="photo">Room Photo</Form.Label>
+              <Form.Control
+                type="file"
+                required
+                id="photo"
+                name="photo"
+                onChange={handleImageChange}
+              />
+              {imagePreview && (
+                <img
+                  src={imagePreview}
+                  alt="Preview Room Photo"
+                  style={{ maxWidth: "400px", maxHeight: "400px" }}
+                  className="mb-3"
                 />
-              </div>
-              <div className="mb-3">
-                <label className="form-label" htmlFor="photo">
-                  Room Photo
-                </label>
-                <input
-                  type="file"
-                  className="form-control"
-                  required
-                  id="photo"
-                  name="photo"
-                  onChange={handleImageChange}
-                />
-                {imagePreview && (
-                  <img
-                    src={imagePreview}
-                    alt="Preview Room Photo"
-                    style={{ maxWidth: "400px", maxHeight: "400px" }}
-                    className="mb-3"
-                  />
-                )}
-              </div>
-              <div className="d-grid d-md-flex mt-2">
-                <Link to={"/existing-rooms"} className="btn btn-outline-info">
-                  Back
-                </Link>
-                <button type="submit" className="btn btn-outline-primary ml-5">
-                  Save Room
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </section>
-    </>
+              )}
+            </Form.Group>
+            <div className="d-grid d-md-flex mt-2 gap-2">
+              <Link to="/existing-rooms" className="btn btn-info">
+                Back
+              </Link>
+              <Button type="submit" className="btn btn-primary ml-5">
+                Save Room
+              </Button>
+            </div>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

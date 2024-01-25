@@ -17,7 +17,7 @@ function RoomCard({ room }) {
           </div>
           <div className="flex-grow-1 ml-3 px-5">
             <Card.Title className="hotel-color">{room.roomType}</Card.Title>
-            <Card.Title className="text-warning-emphasis">
+            <Card.Title className="text-primary">
               {room.roomPrice} € / night
             </Card.Title>
             <Card.Text>

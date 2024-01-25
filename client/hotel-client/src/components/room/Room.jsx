@@ -39,10 +39,14 @@ function Room() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading rooms.....</div>;
+    return (
+      <Container className="text-center mt-2">Loading rooms.....</Container>
+    );
   }
   if (errorMessage) {
-    return <div className="text-danger">Error : {errorMessage}</div>;
+    return (
+      <Container className="text-danger">Error : {errorMessage}</Container>
+    );
   }
 
   const totalPages = Math.ceil(filteredData.length / ROOMS_PER_PAGE);

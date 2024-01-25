@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { register } from "../utils/API";
+import { Alert, Button, Form, Container, Stack } from "react-bootstrap";
 
 function Register() {
   const [registration, setRegistration] = useState({
@@ -35,91 +36,75 @@ function Register() {
   };
 
   return (
-    <section className="container col-6 mt-5 mb-5">
-      {errorMessage && <p className="alert alert-danger">{errorMessage}</p>}
-      {successMessage && (
-        <p className="alert alert-success">{successMessage}</p>
-      )}
+    <Container className="col-6 mt-5 mb-5">
+      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+      {successMessage && <Alert variant="success">{successMessage}</Alert>}
 
       <h2>Register</h2>
-      <form onSubmit={handleRegistration}>
-        <div className="mb-3 row">
-          <label htmlFor="firstName" className="col-sm-2 col-form-label">
-            first Name
-          </label>
-          <div className="col-sm-10">
-            <input
-              id="firstName"
-              name="firstName"
-              type="text"
-              className="form-control"
-              value={registration.firstName}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
+      <Form onSubmit={handleRegistration}>
+        <Form.Group className="mb-3">
+          <Form.Label className="mb-3">First Name</Form.Label>
+          <Form.Control
+            id="firstName"
+            name="firstName"
+            type="text"
+            value={registration.firstName}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
 
-        <div className="mb-3 row">
-          <label htmlFor="lastName" className="col-sm-2 col-form-label">
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="lastName" sm={2}>
             Last Name
-          </label>
-          <div className="col-sm-10">
-            <input
-              id="lastName"
-              name="lastName"
-              type="text"
-              className="form-control"
-              value={registration.lastName}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
+          </Form.Label>
+          <Form.Control
+            id="lastName"
+            name="lastName"
+            type="text"
+            value={registration.lastName}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
 
-        <div className="mb-3 row">
-          <label htmlFor="email" className="col-sm-2 col-form-label">
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="email" column sm={2}>
             Email
-          </label>
-          <div className="col-sm-10">
-            <input
-              id="email"
-              name="email"
-              type="email"
-              className="form-control"
-              value={registration.email}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
+          </Form.Label>
+          <Form.Control
+            id="email"
+            name="email"
+            type="email"
+            value={registration.email}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
 
-        <div className="mb-3 row">
-          <label htmlFor="password" className="col-sm-2 col-form-label">
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="password" column sm={2}>
             Password
-          </label>
-          <div className="col-sm-10">
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              name="password"
-              value={registration.password}
-              onChange={handleInputChange}
-            />
+          </Form.Label>
+
+          <Form.Control
+            type="password"
+            id="password"
+            name="password"
+            value={registration.password}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Stack direction="horizontal" gap={3}>
+          <div className="">
+            <Button type="submit">Register</Button>
           </div>
-        </div>
-        <div className="mb-3">
-          <button
-            type="submit"
-            className="btn btn-hotel"
-            style={{ marginRight: "10px" }}
-          >
-            Register
-          </button>
-          <span style={{ marginLeft: "10px" }}>
-            Already have an account? <Link to={"/login"}>Login</Link>
-          </span>
-        </div>
-      </form>
-    </section>
+          <div className="p-2">
+            <span className="">
+              Already have an account ? <Link to="/login">Login</Link>
+            </span>
+          </div>
+        </Stack>
+      </Form>
+    </Container>
   );
 }
 

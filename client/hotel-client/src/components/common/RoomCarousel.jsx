@@ -36,7 +36,7 @@ function RoomCarousel() {
         <Link to={"/browse-all-rooms"} className="hotel-color text-center mb-1">
           Browse all rooms...
         </Link>
-        <Carousel indicators={true}>
+        <Carousel indicators={false}>
           {[...Array(Math.ceil(rooms.length / 3))].map((_, index) => (
             <Carousel.Item key={index}>
               <Row>

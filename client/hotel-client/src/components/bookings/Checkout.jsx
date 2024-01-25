@@ -85,6 +85,10 @@ function Checkout() {
                   </ul>
                 </td>
               </tr>
+              <tr>
+                <th>Description:</th>
+                <td>{roomInfo.description}</td>
+              </tr>
             </tbody>
           </Table>
         </Col>

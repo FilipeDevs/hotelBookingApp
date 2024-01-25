@@ -3,6 +3,7 @@ package com.filipeDevs.hotelapi.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import java.util.Collection;
 import java.util.HashSet;
@@ -30,8 +31,13 @@ public class User {
     @NotBlank
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST,
-            CascadeType.MERGE, CascadeType.DETACH })
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE})
     private Collection<Role> roles = new HashSet<>();
 
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
 }

@@ -5,6 +5,7 @@ import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.validation.constraints.Size;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import jakarta.persistence.CascadeType;
@@ -33,6 +34,7 @@ public class Room {
 
     private boolean isBooked = false;
 
+    @Size(min = 30, max = 250)
     private String description;
 
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

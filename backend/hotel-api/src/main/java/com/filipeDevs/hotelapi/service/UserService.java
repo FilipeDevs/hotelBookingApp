@@ -7,6 +7,7 @@ import com.filipeDevs.hotelapi.model.Role;
 import com.filipeDevs.hotelapi.model.User;
 import com.filipeDevs.hotelapi.repository.RoleRepository;
 import com.filipeDevs.hotelapi.repository.UserRepository;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -31,6 +32,16 @@ public class UserService {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role userRole = roleRepository.findByName("ROLE_USER").get();
+        user.setRoles(Collections.singletonList(userRole));
+        return userRepository.save(user);
+    }
+
+    public User registerAdmin(User user) {
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new IllegalArgumentException("User with e-mail" + user.getEmail() + " already exists");
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Role userRole = roleRepository.findByName("ROLE_ADMIN").get();
         user.setRoles(Collections.singletonList(userRole));
         return userRepository.save(user);
     }

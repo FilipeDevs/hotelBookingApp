@@ -1,5 +1,14 @@
 version: "3"
 services:
+  react_client:
+    build: ./hotel-client
+    ports:
+      - 80:80
+    networks:
+      - springapimysql-net
+    depends_on:
+      - api_service
+
   api_service:
     build: ./hotel-api
     ports:

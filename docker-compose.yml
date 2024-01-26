@@ -16,7 +16,8 @@ services:
     networks:
       - springapimysql-net
     depends_on:
-      - mysqldb
+      mysqldb:
+        condition: service_healthy
     volumes:
       - .m2:/root/.m2
 
@@ -29,5 +30,10 @@ services:
     environment:
       MYSQL_DATABASE: hoteldb
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_MAX_ALLOWED_PACKET: 64M
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 10s
+      retries: 5
 networks:
   springapimysql-net:

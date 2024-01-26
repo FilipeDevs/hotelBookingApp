@@ -36,3 +36,15 @@ docker-compose up
 ```
 
 Access the application at [localhost:80](localhost:80)
+
+## Screenshots
+
+![Home View](https://i.imgur.com/L6zv3RI.png)
+
+![Browse View](https://i.imgur.com/gvp8KLG.png)
+
+![Manage Rooms View](https://i.imgur.com/IsDXME4.png)
+
+![Manage Bookings View](https://i.imgur.com/rSSowKD.png)
+
+![Profile View](https://i.imgur.com/3iTYb9K.png)

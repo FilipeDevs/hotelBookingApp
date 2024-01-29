@@ -43,6 +43,8 @@ Access the application at [localhost:80](localhost:80)
 
 ![Browse View](https://i.imgur.com/gvp8KLG.png)
 
+![Book View](https://i.imgur.com/VLrT7yo.png)
+
 ![Manage Rooms View](https://i.imgur.com/IsDXME4.png)
 
 ![Manage Bookings View](https://i.imgur.com/rSSowKD.png)
